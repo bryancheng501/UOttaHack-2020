@@ -13,17 +13,11 @@ def get_soup(url,header):
         'html.parser')
 
 def get_images(query):
-    #don't need this - for loop over pokemon names
-    """
-    query = sys.argv[1]
-    query= query.split()
-    query='+'.join(query)
-    """
     counter = 1
     url="http://www.bing.com/images/search?q=" + query + "&FORM=HDRSC2"
 
     #add the directory for your image here
-    DIR="Pokemon_Images"
+    DIR="Pokemon_Images/test"
     header={'User-Agent':"Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.134 Safari/537.36"}
     soup = get_soup(url,header)
 
@@ -34,19 +28,20 @@ def get_images(query):
         turl = m["turl"]
         murl = m["murl"]
 
-        image_name = query + '_' + str(counter) + '.jpg'
+        image_name = query + '_test_' + str(counter) + '.jpg'
         counter += 1
         #urllib.parse.urlsplit(murl).path.split("/")[-1]
         print(image_name)
 
         ActualImages.append((image_name, turl, murl))
 
-    print("there are total" , len(ActualImages),"images")
+    print("There are " , len(ActualImages),"images")
 
     if not os.path.exists(DIR):
         os.mkdir(DIR)
 
-    DIR = os.path.join(DIR, query.split()[0])
+    query += "_test"
+    DIR = os.path.join(DIR, query)
     if not os.path.exists(DIR):
         os.mkdir(DIR)
 
@@ -61,7 +56,7 @@ def get_images(query):
             f.write(raw_img)
             f.close()
         except Exception as e:
-            print("could not load : " + image_name)
+            print("Could not load : " + image_name)
             print(e)
 
 #Directory where pokemon names are stored
